@@ -11,15 +11,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve google verification file
 app.get('/googleba92bade66ce0fc9.html', (req, res) => {
-  const filePath = path.join(__dirname, 'googleba92bade66ce0fc9.html');
-  fs.readFile(filePath, (err, data) => {
-      if (err) {
-          console.error('Error reading file:', err);
-          return res.status(500).send('Internal Server Error');
-      }
-      res.setHeader('Content-Type', 'text/html');
-      res.send(data);
-  });
+  res.sendFile(path.join(__dirname, 'googleba92bade66ce0fc9.html'));
 });
 
 
