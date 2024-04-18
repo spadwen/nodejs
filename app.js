@@ -17,9 +17,9 @@ app.get('/googleba92bade66ce0fc9.html', (req, res) => {
 
 // Array of carousel items
 const carouselItems = [
-    { imageUrl: '/images/home01.jpeg', altText: 'Slide 1' },
-    { imageUrl: '/images/home02.jpeg', altText: 'Slide 2' },
-    { imageUrl: '/images/home03.jpeg', altText: 'Slide 3' },
+    { imageUrl: '/images/home01.jpg', altText: 'Slide 1' },
+    { imageUrl: '/images/home02.jpg', altText: 'Slide 2' },
+    { imageUrl: '/images/home03.jpg', altText: 'Slide 3' },
   ];
   
   // Define routes
