@@ -1,4 +1,37 @@
 <%- include('layout/header') %>
-  <h1>Welcome to the Contact Page</h1>
+  <h1>Contact Us</h1>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <form action="/submit-form" method="POST">
+          <div class="mb-3">
+            <label for="name">Name<span class="red">*</span>:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="email">Email Address<span class="red">*</span>:</label>
+            <input type="text" class="form-control" id="email" name="email" required>
+          </div>
+          <div class="mb-3">
+            <label for="mobile">Mobile Number:</label>
+            <input type="text" class="form-control" id="mobile" name="mobile">
+          </div>
+          <div class="mb-3">
+            <label for="subject">Subject<span class="red">*</span>:</label>
+            <input type="text" class="form-control" id="subject" name="subject" required>
+          </div>
+          <div class="mb-3">
+            <label for="comment">Comment<span class="red">*</span>:</label>
+            <textarea id="comment" class="form-control" name="comment" required></textarea>
+          </div><button type="submit" class="cs-submit">Submit</button>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+  
+  
+
 <%- include('layout/footer') %>
 
