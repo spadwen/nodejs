@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <form action="/submit-form" method="POST">
+        <form action="/submit-form" method="POST" onsubmit="return validateForm()">
           <div class="mb-3">
             <label for="name">Name<span class="red">*</span>:</label>
             <input type="text" class="form-control" id="name" name="name" required>
@@ -24,14 +24,88 @@
           <div class="mb-3">
             <label for="comment">Comment<span class="red">*</span>:</label>
             <textarea id="comment" class="form-control" name="comment" required></textarea>
-          </div><button type="submit" class="cs-submit">Submit</button>
+            
+          </div>
+          <input type="hidden" id="recordtime" name="recordtime" value="<%= currentTime %>">
+          <button type="submit" class="cs-submit">Submit</button>
         </form>
       </div>
       
     </div>
   </div>
   
+  <script>
+    function validateField(fieldId) {
+      var fieldValue = document.getElementById(fieldId).value;
+      var isValid = false;
   
+      switch (fieldId) {
+        case 'name':
+          isValid = validateName(fieldValue);
+          break;
+        case 'email':
+          isValid = validateEmail(fieldValue);
+          break;
+        case 'mobile':
+          isValid = validateMobile(fieldValue);
+          break;
+        case 'subject':
+          isValid = validateSubject(fieldValue);
+          break;
+        case 'comment':
+          isValid = validateComment(fieldValue);
+          break;
+      }
+  
+      updateFieldValidity(fieldId, isValid);
+    }
+  
+    function updateFieldValidity(fieldId, isValid) {
+      var field = document.getElementById(fieldId);
+      if (!isValid) {
+        field.classList.add('invalid');
+      } else {
+        field.classList.remove('invalid');
+      }
+    }
+  
+    function validateForm() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var mobile = document.getElementById("mobile").value;
+      var subject = document.getElementById("subject").value;
+      var comment = document.getElementById("comment").value;
+  
+      // Validate all fields before form submission
+      if (!validateName(name) || !validateEmail(email) || !validateMobile(mobile) || !validateSubject(subject) || !validateComment(comment)) {
+        alert("Please fix the errors before submitting the form.");
+        return false;
+      }
+  
+      return true;
+    }
+  
+    // Validation functions for each field
+    function validateName(name) {
+      return /^[a-zA-Z\s']+$/.test(name);
+    }
+  
+    function validateEmail(email) {
+      return /\S+@\S+\.\S+/.test(email);
+    }
+  
+    function validateMobile(mobile) {
+      return mobile === "" || /^\d{12}$/.test(mobile);
+    }
+  
+    function validateSubject(subject) {
+      return /^[a-zA-Z0-9\s:_-]+$/.test(subject);
+    }
+  
+    function validateComment(comment) {
+      return /^[a-zA-Z0-9\s,.'":!?/$%]+$/.test(comment);
+    }
+  </script>
 
 <%- include('layout/footer') %>
 

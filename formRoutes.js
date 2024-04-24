@@ -11,7 +11,7 @@ const connection = mysql.createConnection(config.database);
 
 // Handle form submission
 router.post('/submit-form', (req, res) => {
-    const { name, email, mobile, subject, comment } = req.body;
+    const { name, email, mobile, subject, comment, recordtime } = req.body;
 
     // Log form data for debugging
     console.log('[Form Submission] Received form data:');
@@ -20,10 +20,11 @@ router.post('/submit-form', (req, res) => {
     console.log('Mobile:', mobile);
     console.log('Subject:', subject);
     console.log('Comment:', comment);
+    console.log('Recordtime:', recordtime);
 
     // Save data to MySQL database
-    const sql = 'INSERT INTO contactform (name, email, mobile, subject, comment) VALUES (?, ?, ?, ?, ?)';
-    connection.query(sql, [name, email, mobile, subject, comment], (err, result) => {
+    const sql = 'INSERT INTO contactform (name, email, mobile, subject, comment, recordtime) VALUES (?, ?, ?, ?, ?, ?)';
+    connection.query(sql, [name, email, mobile, subject, comment, recordtime], (err, result) => {
         if (err) {
             console.error('Error inserting data into database:', err);
             return res.status(500).send('Error submitting form. Please try again later.');
@@ -34,10 +35,12 @@ router.post('/submit-form', (req, res) => {
     const transporter = nodemailer.createTransport(config.email);
 
         const mailOptions = {
-            from: email, // Set sender email dynamically from the form
+           // from: email, // Set sender email dynamically from the form
+
+           from: 'dwen2k@tpg.com.au',
             to: 'dwentp@gmail.com',
             subject: subject,
-            text: `Name: ${name}\nEmail: ${email}\nMobile: ${mobile}\nSubject: ${subject}\nComment: ${comment}`
+            text: `Name: ${name}\nEmail: ${email}\nMobile: ${mobile}\nSubject: ${subject}\nComment: ${comment}\nRecordTime: ${recordtime}`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -49,7 +52,7 @@ router.post('/submit-form', (req, res) => {
         });
 
         // Redirect to thank you page after form submission
-        res.redirect('/thank-you');
+        res.redirect('/contact/thank-you');
     }); console.log('Form submitted successfully');
 });
 
