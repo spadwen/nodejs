@@ -26,16 +26,35 @@ const carouselItems = [
     { imageUrl: '/images/home02.jpg', altText: 'Slide 2' },
     { imageUrl: '/images/home03.jpg', altText: 'Slide 3' },
   ];
+
+  // Function to generate the current time
+function getCurrentTime() {
+  const now = new Date();
+  return now.toISOString().slice(0, 19).replace('T', ' '); // Format: YYYY-MM-DD HH:MM:SS
+}
+
+// Define a route to render the contact form
+app.get('/contact', (req, res) => {
+  const currentTime = getCurrentTime();
+  res.render('contact', { title: 'Contact', currentTime }); // Pass currentTime to the template
+});
   
   // Define routes
 app.get('/', (req, res) => res.render('index', { title: 'Home', carouselItems }));
 app.get('/about', (req, res) => res.render('about', { title: 'About' }));
 app.get('/service', (req, res) => res.render('service', { title: 'Service' }));
 app.get('/contact', (req, res) => res.render('contact', { title: 'Contact' }));
-app.get('/thank-you', (req, res) => res.render('thank-you'));
+//app.get('/thank-you', (req, res) => res.render('thank-you'));
+app.get('/contact/thank-you', (req, res) => res.render('thank-you', { title: 'Thank You' }));
+
+
 
 // Use the form submission route
 app.use('/', formRoutes);
+
+
+
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
