@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const formRoutes = require('./formRoutes'); // Import formRoutes
+const basicAuth = require('express-basic-auth');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Apply basic authentication middleware globally
+app.use(basicAuth({
+  users: { 'admin': 'password' }, // Replace with your own username and password
+  challenge: true, // Show authentication dialog
+}));
 
 // Serve google verification file
 app.get('/googleba92bade66ce0fc9.html', (req, res) => {

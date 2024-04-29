@@ -1,13 +1,38 @@
 const express = require('express');
+const basicAuth = require('express-basic-auth');
 const router = express.Router();
 const config = require('./config');
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
 
-
-
 // Create MySQL connection
 const connection = mysql.createConnection(config.database);
+
+
+
+// Define route to retrieve form fields, 
+// starting API generating
+router.get('/api/contactformAPI', (req, res) => {
+    // Query the database to fetch all records from the 'contactform' table
+    connection.query('SELECT * FROM contactform', (err, rows) => {
+      if (err) {
+        console.error('Error fetching contactformAPI:', err);
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+  
+      // Send the fetched records as JSON response
+      res.json({ contactformAPI: rows });
+    });
+  });
+  
+  // Define basic authentication credentials
+  const users = {
+    [config.basicAuth.username]: config.basicAuth.password
+  };
+  
+  // Apply basic authentication middleware to the route
+  router.use('/api/contactformAPI', basicAuth({ users }));
+  //ending API generating
 
 // Handle form submission
 router.post('/submit-form', (req, res) => {
